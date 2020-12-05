@@ -1,213 +1,428 @@
 package ui;
 
+import java.util.*;
 import model.*;
-
-import java.util.Scanner;
 
 public class Menu {
 
-    private FootballClub footballClub;
-    Scanner sc = new Scanner(System.in);
+	private static Scanner sc = new Scanner(System.in);
+	private FootballClub club;
+	private final static int CREATE_TEAM = 1;
+	private final static int ADD_EMPLOYEE = 2;
+	private final static int DISMISS_EMPLOYEE = 3;
+	private final static int ADD_EMPLOYEE_TEAM = 4;
+	private final static int UPDATE_TEAM_INFO = 5;
+	private final static int UPDATE_EMPLOYEE_INFO = 6;
+	private final static int ADD_COACH_OFFICE = 7;
+	private final static int ADD_PLAYER_DR = 8;
+	private final static int SHOW_CLUB_INFO = 9;
+	private final static int SHOW_TEAM_INFO = 10;
+	private final static int SHOW_INSTALATIONS_INFO = 11;
+	private final static int SHOW_EMPLOYEE_INFO = 12;
+	private final static int SHOW_EMPLOYEE_LOCATION = 13;
+	private final static int SHOW_TEAM_LINEUPS = 14;
+	private final static int EXIT = 15;
 
-    public Menu() {
-        this.footballClub = new FootballClub();
-    }
+	public Menu() {
+		System.out.println("Ingrese el nombre del club");
+		String name = sc.nextLine();
+		System.out.println("Ingrese el NIT del club");
+		String nit = sc.nextLine();
+		System.out.println("Ingrese la fecha de fundacion del club");
+		String foundationDate = sc.nextLine();
+		this.club = new FootballClub(name, nit, foundationDate);
+	}
 
-    /**
-     * Allows know what do you wanna to do in the aplication <br>
-     * <b> pre: </b><br>
-     * <b> post </b> The option is correct <br>
-     * 
-     * 
-     */
-    public void showMenu() {
-        System.out.println(
-                "Bienvenidos a la escuela de fútbol profesional FC Barcelona, a continuación usted tendrá el siguiente menú: ");
-        System.out.println("Seleccione (1) si quiere contratar empleados");
-        System.out.println("Seleccione (2) si quiere despedir empleados");
-        System.out.println("Seleccione (3) si quiere agregar jugadores o entrenadores a un equipo");
-        System.out.println("Seleccione (4) si quiere actualizar la información de un empleado");
-        System.out.println("Seleccione (5) si quiere actualizar la información de un equipo");
-        System.out.println("Seleccione (6) si desea agregar alineaciones a un equipo");
-        System.out.println("Seleccione (7) si desea ubicar un jugador en un vestidor");
-        System.out.println("Seleccione (8) si desea ubicar un entrenador en una oficina");
-        System.out.println("Seleccione (9) si desea información del club");
-        System.out.println("Seleccione (10) si quiere mostrar la ubicación de los entrenadores en sus oficinas");
-        System.out.println("Seleccione (11) si quiere mostrar la ubicación de los jugadores en sus vestidores");
-        System.out.println("Seleccione (12) si desea salir");
-    }
+	public void showMenu() {
+		System.out.println("(1) Crear equipo");
+		System.out.println("(2) Contratar un empleado");
+		System.out.println("(3) Despedir un empleado");
+		System.out.println("(4) Agregar un empleado a un equipo");
+		System.out.println("(5) Actualizar informacion del equipo");
+		System.out.println("(6) Actualizar informacion de un empleado");
+		System.out.println("(7) Agregar entrenador a las oficinas");
+		System.out.println("(8) Agregar jugador al vestuario");
+		System.out.println("(9) Mostrar la informacion del club");
+		System.out.println("(10) Mostrar la informacion de los equipos");
+		System.out.println("(11) Mostrar la informacion de las instalaciones");
+		System.out.println("(12) Mostrar la informacion de los empleados");
+		System.out.println("(13) Ver la ubicacion de un empleado en las oficinas o en los vestuarios");
+		System.out.println("(14) Ver las alineaciones de un/los equipo(s) en forma de matriz");
+		System.out.println("(15) Salir ");
+	}
 
-    public void doOperation(int option) {
-        switch (option) {
-            case 1:
-                System.out.println();
-                break;
+	public String readCreateTeam() {
+		System.out.println("Ingrese A o B segun cual equipo desee crear");
+		String team = sc.nextLine();
+		System.out.println("Ingrese el nombre del equipo");
+		String teamName = sc.nextLine();
+		String msg = this.club.createTeam(teamName, team);
+		return msg;
+	}
 
-            case 2:
-                System.out.println();
-                break;
+	public String readAddEmployee() {
+		String msg;
+		System.out.println("Ingrese el tipo de empleado que desea agregar");
+		System.out.println("(1) Entrenador (2) Jugador (3) Asistente");
+		int choice = sc.nextInt();
+		sc.nextLine();
+		System.out.println("Ingrese el nombre");
+		String name = sc.nextLine();
+		System.out.println("Ingrese el ID");
+		String id = sc.nextLine();
+		System.out.println("Ingrese el salario");
+		double salary = sc.nextDouble();
+		sc.nextLine();
+		if (choice == 1) {
+			System.out.println("Ingrese los años de experiencia del entrenador");
+			int yearsExperience = sc.nextInt();
+			sc.nextLine();
+			System.out.println("Ingrese el numero de equipos que ha tenido a su cargo el entrenador");
+			int numbersTeams = sc.nextInt();
+			sc.nextLine();
+			System.out.println("Ingrese el numero de campeonatos ganados hasta ahora");
+			int championships = sc.nextInt();
+			sc.nextLine();
+			msg = this.club.addEmployee(yearsExperience, name, id, salary, numbersTeams, championships);
+		} else if (choice == 2) {
+			System.out.println("Ingrese el numero de camiseta del jugador");
+			int dorsal = sc.nextInt();
+			sc.nextLine();
+			System.out.println("Calificacion del jugador");
+			int rating = sc.nextInt();
+			sc.nextLine();
+			System.out.println("Ingrese la posicion del jugador (Portero,Defensa,Mediocampista,Delantero)");
+			String position = sc.nextLine();
+			msg = this.club.addEmployee(name, id, salary, dorsal, rating, position);
+		} else if (choice == 3) {
+			System.out.println("Ingrese los años de experiencia del Asistente");
+			int yearsExperience1 = sc.nextInt();
+			sc.nextLine();
+			System.out.println("El asistente fue jugador profesional, ingrese 0(NO)/1(SI)");
+			int exPlayer = sc.nextInt();
+			sc.nextLine();
+			System.out.println("Ingrese la experticia del asistente (Ofensivo, Defensivo, Posesion, Creativo)");
+			String expertise = sc.nextLine();
+			msg = this.club.addEmployee(yearsExperience1, name, id, salary, exPlayer, expertise);
+		} else {
+			msg = "Opcion invalida";
+		}
+		return msg;
 
-            case 3:
-                System.out.println();
-                break;
+	}
 
-            case 4:
-                System.out.println();
-                break;
-            case 5:
-                System.out.println();
-                break;
-            case 6:
-                System.out.println();
-                break;
-            case 7:
-                System.out.println();
-                break;
-            case 8:
-                System.out.println();
-                break;
-            case 9:
-                System.out.println();
-                break;
-            case 10:
-                System.out.println();
-                break;
-            case 11:
-                System.out.println();
-                break;
-            case 12:
-                System.out.println("Gracias por usar esta aplicacion, vuelva pronto");
-                break;
-            default:
-                System.out.println("Error, opción no válida");
-        }
-    }
+	public String readDismissEmployee() {
+		System.out.println("Ingrese el nombre del empleado que desea despedir");
+		String name = sc.nextLine();
+		String msg = this.club.dismiss(name);
+		return msg;
+	}
 
-    public String hireEmployee() {
-        System.out.println("Ingrese el nombre del empleado a contratar");
-        String name = sc.nextLine();
-        System.out.println("Ingrese el numero de identificación del usuario");
-        int id = sc.nextInt();
-        System.out.println("Ingrese el salario del empleado a contratar");
-        int salary = sc.nextInt();
-        sc.nextLine();
-        String message = footballClub.hireEmployee(name);
-        return message;
-    }
+	public String readEmployeeToTeam() {
+		String msg = "";
+		System.out.println("Ingrese el tipo de empleado que desea agregar al equipo");
+		System.out.println("1 Entrenador 2 Jugador 3 Asistente");
+		int choice = sc.nextInt();
+		sc.nextLine();
+		System.out.println("Ingrese el nombre del equipo del cual sera parte");
+		String teamName = sc.nextLine();
+		switch (choice) {
+			case 1:
+				System.out.println("Ingrese el nombre del jugador");
+				String playerName = sc.nextLine();
+				msg = this.club.playerToTeam(playerName, teamName);
+				break;
+			case 2:
+				System.out.println("Ingrese el nombre del entrenador");
+				String coachName = sc.nextLine();
+				msg = this.club.headcoachToTeam(coachName, teamName);
+				break;
+			case 3:
+				System.out.println("Ingrese el nombre del asistente");
+				String assistantName = sc.nextLine();
+				msg = this.club.assistantToTeam(assistantName, teamName);
+				break;
+			default:
+		}
+		return msg;
+	}
 
-    public String fireEmployee() {
-        System.out.println("Ingrese el nombre del empleado a despedir");
-        String name = sc.nextLine();
-        System.out.println("Ingrese el numero de identificación del usuario");
-        int id = sc.nextInt();
-        sc.nextLine();
-        String message = footballClub.fireEmployee(name, id);
-        return message;
-    }
+	public String readUpdateTeam() {
+		String msg = "";
+		String newName = "xyz";
+		String date = "01/01/1900";
+		String tactic = "Por defecto";
+		String formation = "4-4-2";
+		System.out.println("Ingrese el nombre del equipo");
+		String teamName = sc.nextLine();
+		System.out.println("Ingrese: " + "\n" + "(1) Actualizar el nombre del equipo" + "\n"
+				+ " (2) Agregar una nueva alineacion al equipo");
+		int choice = sc.nextInt();
+		sc.nextLine();
+		if (choice == 1) {
+			System.out.println("Ingrese el nuevo nombre del equipo");
+			newName = sc.nextLine();
+			msg = this.club.updateTeamInfo(teamName, newName, date, tactic, formation, choice);
+		} else if (choice == 2) {
+			System.out.println("Ingrese la fecha de uso de la alineacion");
+			date = sc.nextLine();
+			System.out
+					.println("Ingrese la tactica de la alineacion (Posesion, Contraataque, Presion alta, Por defecto)");
+			tactic = sc.nextLine();
+			System.out.println("Ingrese la formacion del equipo SIN ESPACIOS (ej:4-4-2, 4-1-2-1-2-1)");
+			System.out.println(
+					"Recuerde que debe tener 10 jugadores en la formacion, 3 lineas de jugadores como MINIMO y 6 como MAXIMO");
+			formation = sc.nextLine();
+			msg = this.club.updateTeamInfo(teamName, newName, date, tactic, formation, choice);
+		} else {
+			msg = this.club.updateTeamInfo(teamName, newName, date, tactic, formation, choice);
+		}
+		return msg;
+	}
 
-    public void addFootballClub() {
-        System.out.println("Escriba el nombre del club");
-        String name = sc.nextLine();
-        System.out.println("Escriba el NIT del club");
-        int nit = sc.nextInt();
-        System.out.println("Escriba el día de fundación ");
-        String foundationDate = sc.nextLine();
-        sc.nextLine();
+	public String readUpdateEmployeeInfo() {
+		String msg;
+		System.out.println("Ingrese el tipo de empleado al que desea actualizar la informacion");
+		System.out.println("(1) Entrenador (2) Jugador (3) Asistente");
+		int choice = sc.nextInt();
+		sc.nextLine();
+		if (choice == 1) {
+			msg = readUpdateCoachInfo();
+		} else if (choice == 2) {
+			msg = readUpdatePlayerInfo();
+		} else if (choice == 3) {
+			msg = readUpdateAssistantInfo();
+		} else {
+			msg = "Opcion invalida";
+		}
+		return msg;
+	}
 
-    }
+	private String readUpdatePlayerInfo() {
+		String msg = "";
+		int dorsal = 0;
+		System.out.println("Ingrese nombre del jugador");
+		String name = sc.nextLine();
+		double salary = 0.0;
+		int goals = 0;
+		int rating = 0;
+		String status = "Activo";
+		System.out.println("Ingrese que atributo desea actualizar");
+		System.out.println("(1) Salario (2) Estado (3) Dorsal (4) Goles (5) Calificacion");
+		int attribute = sc.nextInt();
+		sc.nextLine();
+		switch (attribute) {
+			case 1:
+				System.out.println("Ingrese nuevo salario");
+				salary = sc.nextDouble();
+				sc.nextLine();
+				msg = this.club.updateEmployeesInfo(name, salary, status, dorsal, goals, rating, attribute);
+				break;
+			case 2:
+				System.out.println("Ingrese nuevo estado(Activo o Inactivo)");
+				status = sc.nextLine();
+				msg = this.club.updateEmployeesInfo(name, salary, status, dorsal, goals, rating, attribute);
+				break;
+			case 3:
+				System.out.println("Ingrese el nuevo numero de camiseta del jugador");
+				dorsal = sc.nextInt();
+				sc.nextLine();
+				msg = this.club.updateEmployeesInfo(name, salary, status, dorsal, goals, rating, attribute);
+			case 4:
+				System.out.println("Ingrese la cantidad de nuevos goles que ha marcado");
+				goals = sc.nextInt();
+				sc.nextLine();
+				msg = this.club.updateEmployeesInfo(name, salary, status, dorsal, goals, rating, attribute);
+				break;
+			case 5:
+				System.out.println("Ingrese la calificacion");
+				rating = sc.nextInt();
+				sc.nextLine();
+				msg = this.club.updateEmployeesInfo(name, salary, status, dorsal, goals, rating, attribute);
+				break;
+		}
+		return msg;
+	}
 
-    public void registerEmployee() {
-        System.out.println("********************");
-        System.out.println("Registrar Informacion");
-        System.out.println("********************");
+	private String readUpdateCoachInfo() {
+		String msg = "";
+		int yearsExperience = 0;
+		double salary = 0.0;
+		int championships = 0;
+		String status = "Activo";
+		System.out.println("Ingrese nombre del Entrenador");
+		String name = sc.nextLine();
+		System.out.println("Ingrese que atributo desea actualizar");
+		System.out.println("(1) Salario (2) Estado (3) Experiencia (4) Campeonatos ganados");
+		int attribute = sc.nextInt();
+		sc.nextLine();
+		switch (attribute) {
+			case 1:
+				System.out.println("Ingrese nuevo salario");
+				salary = sc.nextDouble();
+				sc.nextLine();
+				msg = this.club.updateEmployeesInfo(yearsExperience, name, salary, championships, status, attribute);
+				break;
+			case 2:
+				System.out.println("Ingrese nuevo estado(Activo o Inactivo)");
+				status = sc.nextLine();
+				msg = this.club.updateEmployeesInfo(yearsExperience, name, salary, championships, status, attribute);
+				break;
+			case 3:
+				System.out.println("Ingrese la cantidad de años de experiencia a agregar");
+				yearsExperience = sc.nextInt();
+				sc.nextLine();
+				msg = this.club.updateEmployeesInfo(yearsExperience, name, salary, championships, status, attribute);
+				break;
+			case 4:
+				System.out.println("Ingrese la cantidad de nuevos campeonatos que ha ganado");
+				championships = sc.nextInt();
+				sc.nextLine();
+				msg = this.club.updateEmployeesInfo(yearsExperience, name, salary, championships, status, attribute);
+				break;
+		}
+		return msg;
+	}
 
-        System.out.println("Escriba el nombre");
-        String name = sc.nextLine();
-        System.out.println("Escriba el numero de identificacion");
-        String id = sc.nextLine();
-        System.out.println("Escriba el salario del empleado");
-        double salary = sc.nextDouble();
-        sc.nextLine();
+	private String readUpdateAssistantInfo() {
+		String msg = "";
+		int yearsExperience = 0;
+		double salary = 0.0;
+		String status = "Activo";
+		System.out.println("Ingrese nombre del Asistente");
+		String name = sc.nextLine();
+		System.out.println("Ingrese que atributo desea actualizar");
+		System.out.println("(1) Salario (2) Estado (3) Experiencia");
+		int attribute = sc.nextInt();
+		sc.nextLine();
+		switch (attribute) {
+			case 1:
+				System.out.println("Ingrese nuevo salario");
+				salary = sc.nextDouble();
+				sc.nextLine();
+				msg = this.club.updateEmployeesInfo(yearsExperience, attribute, name, salary, status);
+				break;
+			case 2:
+				System.out.println("Ingrese nuevo estado(Activo o Inactivo)");
+				status = sc.nextLine();
+				msg = this.club.updateEmployeesInfo(yearsExperience, attribute, name, salary, status);
+				break;
+			case 3:
+				System.out.println("Ingrese la cantidad de años de experiencia a agregar");
+				yearsExperience = sc.nextInt();
+				sc.nextLine();
+				msg = this.club.updateEmployeesInfo(yearsExperience, attribute, name, salary, status);
+				break;
+		}
+		return msg;
+	}
 
-        System.out.println("Digite (1) para entrenadores, (2) para jugadores");
-        int numplay = sc.nextInt();
-        sc.nextLine();
-        switch (numplay) {
+	public String readCoachToOffice() {
+		System.out.println("Ingrese el nombre del entrenador");
+		String coachName = sc.nextLine();
+		String msg = this.club.coachToOffice(coachName);
+		return msg;
+	}
 
-            case 1:
-                System.out.println("Escriba los años de experiencia");
-                int yearsExperience = sc.nextInt();
-                sc.nextLine();
-                System.out.println("Escribe (1) para si es entrenador principal o (2) para entrenador asistente");
-                int num = sc.nextInt();
-                sc.nextLine();
-                switch (num) {
+	public String readPlayerToDressingRoom() {
+		System.out.println("Ingrese el nombre del jugador");
+		String playerName = sc.nextLine();
+		System.out.println("Ingrese el nombre del equipo al que pertenece el jugador");
+		String teamName = sc.nextLine();
+		String msg = this.club.playerToDressingRoom(teamName, playerName);
+		return msg;
+	}
 
-                    case 1:
-                        System.out.println("Numero de equipos a cargo");
-                        int numberTeam = sc.nextInt();
-                        sc.nextLine();
-                        System.out.println("Campeonatos conseguidos");
-                        int championshipsAchieved = sc.nextInt();
-                        sc.nextLine();
+	public String readEmployeeLocation() {
+		System.out.println("Ingrese el nombre del empleado a buscar");
+		String name = sc.nextLine();
+		String msg = this.club.employeeLocation(name);
+		return msg;
+	}
 
-                        break;
-                    case 2:
-                        System.out.println("Ex jugador de fútbol digite (1) si o (2) no");
-                        boolean playerFootball = sc.nextBoolean();
-                        // if(exPlayer.equalsIgnoreCase("yes"))
-                        System.out.println(
-                                " Escriba su experticia (OFensivo, Defensivo, Posesion, Jugadas de laboratorio)");
-                        String expertise = sc.nextLine().toUpperCase();
+	public String readShowTeamMatriz() {
+		String msg = "";
+		String teamName = "";
+		System.out.println("Dese a ver las alineaciones de ");
+		System.out.println("(1) Todos los equipos (2) Un unico equipo");
+		int choice = sc.nextInt();
+		sc.nextLine();
+		if (choice == 1) {
+			System.out.println("Ingrese el nombre del equipo");
+			teamName = sc.nextLine();
+			msg = this.club.showTeamMatriz(teamName, choice);
+			;
+		} else if (choice == 2) {
+			msg = this.club.showTeamMatriz(teamName, choice);
+		} else {
+			msg = "Opcion invalida";
+		}
+		return msg;
+	}
 
-                        break;
-                    default:
-                        System.out.println("Opcion invalida");
-                }
-                break;
-            case 2:
-                System.out.println("Escriba " + name + "'s numero");
-                int tshirtNumber = sc.nextInt();
-                sc.nextLine();
-                System.out.println("Escriba " + name + " posicion, (Portero, Defensa, Volante, Delantero)");
-                String position = sc.nextLine().toUpperCase();
-                System.out.println("Escriba el numero de goles " + name + " anotados");
-                int goalClub = sc.nextInt();
-                sc.nextLine();
-                System.out.println("Por favor califique al jugador");
-                double averageCalification = sc.nextDouble();
-                sc.nextLine();
+	public void startProgram() {
+		int option;
+		do {
+			showMenu();
+			option = readOption();
+			doOperation(option);
+		} while (option != EXIT);
+	}
 
-                break;
-            default:
-                System.out.println("Opcion invalida");
-        }
-    }
+	public int readOption() {
+		int choice = sc.nextInt();
+		sc.nextLine();
+		return choice;
+	}
 
-    /**
-     * Allows read the option <br>
-     * <b> pre: </b><br>
-     * <b> post </b> The option is correct <br>
-     * 
-     */
-    public int readOption() {
-        int option = sc.nextInt();
-        sc.nextLine();
-        return option;
-    }
-
-    /**
-     * Allows start the programt <br>
-     * <b> pre: </b><br>
-     * <b> post </b> The program are running <br>
-     * 
-     */
-    public void startProgram() {
-        int option;
-        do {
-            showMenu();
-            option = readOption();
-            doOperation(option);
-        } while (option != 12);
-    }
+	public void doOperation(int choice) {
+		switch (choice) {
+			case CREATE_TEAM:
+				readCreateTeam();
+				break;
+			case ADD_EMPLOYEE:
+				readAddEmployee();
+				break;
+			case DISMISS_EMPLOYEE:
+				readDismissEmployee();
+				break;
+			case ADD_EMPLOYEE_TEAM:
+				readEmployeeToTeam();
+				break;
+			case UPDATE_TEAM_INFO:
+				readUpdateTeam();
+				break;
+			case UPDATE_EMPLOYEE_INFO:
+				readUpdateEmployeeInfo();
+				break;
+			case ADD_COACH_OFFICE:
+				readCoachToOffice();
+				break;
+			case ADD_PLAYER_DR:
+				readPlayerToDressingRoom();
+				break;
+			case SHOW_CLUB_INFO:
+				System.out.println(this.club.showClubInfo());
+				break;
+			case SHOW_TEAM_INFO:
+				System.out.println(this.club.showTeamsInfo());
+				break;
+			case SHOW_INSTALATIONS_INFO:
+				System.out.println(this.club.showInstallationsInfo());
+				break;
+			case SHOW_EMPLOYEE_INFO:
+				System.out.println(this.club.showEmployeesInfo());
+				break;
+			case SHOW_EMPLOYEE_LOCATION:
+				readEmployeeLocation();
+				break;
+			case SHOW_TEAM_LINEUPS:
+				readShowTeamMatriz();
+				break;
+			case EXIT:
+				break;
+			default:
+				System.out.println("Opcion invalida, repita nuevamente");
+		}
+	}
 }

@@ -1,5 +1,5 @@
 package model;
+public enum Position{
+	GOALKEEPER, DEFENDER, MIDFIELDER, FORWARD
 
-public enum Position {
-    GOLKEEPER, DEFENDER, STERING_WHEEL, FORWARD
 }

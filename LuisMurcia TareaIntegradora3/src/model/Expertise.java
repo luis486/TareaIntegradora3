@@ -1,5 +1,4 @@
 package model;
-
-public enum Expertise {
-    OFFENSIVE, DEFENSIVE, POSSESION, LAB_PLAYS
+public enum Expertise{
+	OFFENSIVE, DEFENSIVE, POSSESSION,LAB_PLAY
 }
