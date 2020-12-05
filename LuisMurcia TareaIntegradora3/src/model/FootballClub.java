@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 public class FootballClub {
 
-	// Attribute
+	// Attributes
 	private final static int ORDER_OFFICE = 6;
 	private final static int DR_ROWA = 7, DR_COLUMNSA = 6;
 	private final static int ORDER_DRB = 7;
@@ -18,6 +18,11 @@ public class FootballClub {
 	private Player[][] dressingRoomA;
 	private Player[][] dressingRoomB;
 
+	/**
+	 * constructor method <br>
+	 * <b> pre: we need the atributes and relationships </b> 
+	 * @param  name, nit, foundationDate= name String, nit String, foundationDate String 
+	 */
 	public FootballClub(String name, String nit, String foundationDate) {
 		this.name = name;
 		this.nit = nit;
@@ -30,30 +35,66 @@ public class FootballClub {
 		this.teamB = null;
 	}
 
+	/**
+	 * get method <br>
+	 * <b> pre: constructor method </b> 
+	 * @return name= FootballClub name
+	 */
 	public String getName() {
 		return name;
 	}
 
+	/**
+	 * get method <br>
+	 * <b> pre: constructor method </b> 
+	 * @return nit= FootballClub nit 
+	 */
 	public String getNit() {
 		return nit;
 	}
 
+	/**
+	 * get method <br>
+	 * <b> pre: constructor method </b> 
+	 * @return foundationDate= FootballClub foundation date 
+	 */
 	public String getFoundationDate() {
 		return foundationDate;
 	}
 
+	/**
+	 * set constructor <br>
+	 * <b> pre: constructor method </b> 
+	 * @param name= FootballClub name 
+	 */
 	public void setName(String name) {
 		this.name = name;
 	}
 
+	/**
+	 * set constructor <br>
+	 * <b> pre: constructor method </b> 
+	 * @param name= FootballClub name 
+	 */
 	public void setNit(String nit) {
 		this.nit = nit;
 	}
 
+	/**
+	 * set constructor <br>
+	 * <b> pre: constructor method </b> 
+	 * @param foundationDate= FootballClub foundation date 
+	 */
 	public void setFoundationDate(String foundationDate) {
 		this.foundationDate = foundationDate;
 	}
 
+
+	/**
+	 * count how many players are in each dressing room and how many HeadCoach are in each office <br>
+	 * <b> pre: the office matrix and the dressing room matrix must be initialized  </b> 
+	 * @return a message that say, how many players are in each dressing room and how many HeadCoach are in each office
+	 */
 	public String showInstallationsInfo() {
 		String msg = "";
 		int dra = 0;
@@ -87,6 +128,12 @@ public class FootballClub {
 		return msg;
 	}
 
+	/**
+	 * find the employee by comparing the name that the user enter <br>
+	 * <b> pre: there can't  be two employees with the same name
+	 * @param name= Employee name 
+	 * @return the employee or if the employee doen't exist return the null value 
+	 */
 	public Employee findEmployee(String name) {
 		Employee objSearch = null;
 		boolean findPl = false;
@@ -100,6 +147,12 @@ public class FootballClub {
 
 	}
 
+	/**
+	 * search for an employee in the offices or dressing room by name <br>
+	 * <b> pre: the employee has to be enter for the user 
+	 * @param name= Employee name 
+	 * @return a message where gives the information of the coach abd player where they are located or a message saying that they are neither in the offices nor in the dressing rooms
+	 */
 	public String employeeLocation(String name) {
 		Employee objSearch = findEmployee(name);
 		String msg = "";
@@ -143,12 +196,16 @@ public class FootballClub {
 		return msg;
 	}
 
-	// ________________________principal
-	// coach_____________________________________________________________
+
+	/**
+	 * add a new employee of type HeadCoach
+	 * <b> pre: an employee with the same name can't exist 
+	 * @param yearsExperience, name, id, salary, numbersTeams= yearsExperience int, name String, id String, salary double, numbersTeams int
+	 * @return a message saying that the employee has been registered or if there's an employee with the same name it says that the employee already exists 
+	 */
 	public String addEmployee(int yearsExperience, String name, String id, double salary, int numbersTeams,
 			int championships) {
 		String message = "";
-		boolean addPl = false;
 
 		Employee objSearch = findEmployee(name);
 		if (objSearch != null) {
@@ -156,15 +213,17 @@ public class FootballClub {
 		} else {
 			HeadCoach headcoach = new HeadCoach(yearsExperience, name, id, salary, numbersTeams, championships);
 			employee.add(headcoach);
-			addPl = true;
 			message = "El empleado ha sido registrado";
-		}
-		if (addPl == false) {
-			message = "All employee are already created";
 		}
 		return message;
 	}
 
+	/**
+	 * update the HeadCoach information depending what user wants to update <br>
+	 * <b> pre: HeadCoach with that name has to be created 
+	 * @param yearsExperience, name, salary, championships, status, atribute=  yearsExperience int, name String, salary double, championships int, status String
+	 * @return a message saying that the HeadCoach information has been successfully updated or if the name entered isn't from any headCoach the message says that can't found a HeadCoach with that name
+	 */
 	public String updateEmployeesInfo(int yearsExperience, String name, double salary, int championships, String status,
 			int attribute) {
 		String msg = "Se ha actualizado la informacion del entrenador principal exitosamente" + "\n";
@@ -199,18 +258,21 @@ public class FootballClub {
 			}
 		}
 		if (found == false) {
-			msg = "El empleado con ID " + name + " no es un entrenador principal o no esta registrado en el Club"
+			msg = "El empleado con nombre " + name + " no es un entrenador principal o no esta registrado en el Club"
 					+ "\n";
 		}
 		return msg;
 	}
 
-	// ________________________Asistent
-	// coach_____________________________________________________________
+	/**
+	 * add a new employee of type AssistantCoach
+	 * <b> pre: an employee with the same name can't exist 
+	 * @param yearsExperience, name, id, salary, exPlayer= yearsExperience int, name String, id String, salary double, exPlayer int
+	 * @return a message saying that the employee has been registered or if there's an employee with the same name it says that the employee already exists 
+	 */
 	public String addEmployee(int yearsExperience, String name, String id, double salary, int exPlayer,
 			String expertise) {
 		String message = "";
-		boolean addPl = false;
 
 		Employee objSearch = findEmployee(name);
 		if (objSearch != null) {
@@ -218,16 +280,17 @@ public class FootballClub {
 		} else {
 			AssistantCoach assistant = new AssistantCoach(yearsExperience, name, id, salary, exPlayer, expertise);
 			employee.add(assistant);
-			addPl = true;
 			message = "The employee has been registered";
 		}
-		if (addPl == false) {
-			message = "All employee are already created";
-		}
-
 		return message;
 	}
 
+	/**
+	 * update the AssistantCoach information depending what user wants to update <br>
+	 * <b> pre: AssistantCoach with that name has to be created 
+	 * @param yearsExperience, attribute, name, salary, status=  yearsExperience int, attribute int, name String, salary double, status String
+	 * @return a message saying that the AssistantCoach information has been successfully updated or if the name entered isn't from any AssistantCoach the message says that can't found a AssistantCoach with that name
+	 */
 	public String updateEmployeesInfo(int yearsExperience, int attribute, String name, double salary, String status) {
 		String msg = "Se ha actualizado la informacion del entrenador asistente exitosamente" + "\n";
 		boolean found = false;
@@ -266,8 +329,13 @@ public class FootballClub {
 		return msg;
 	}
 
-	// ________________________soccer
-	// player_____________________________________________________________
+
+	/**
+	 * add a new employee of type Player
+	 * <b> pre: an employee with the same name can't exist 
+	 * @param  name, id, salary, dorsal, rating, position= name String, id String, salary double, dorsal int, rating int, position String 
+	 * @return a message saying that the employee has been registered or if there's an employee with the same name it says that the employee already exists 
+	 */
 	public String addEmployee(String name, String id, double salary, int dorsal, int rating, String position) {
 		String message = "";
 		boolean addPl = false;
@@ -288,6 +356,13 @@ public class FootballClub {
 		return message;
 	}
 
+
+	/**
+	 * update the Player information depending what user wants to update <br>
+	 * <b> pre: Player with that name has to be created 
+	 * @param name, salary, status, dorsal, goals, rating= name String, salary double, status String, dorsal int, goals int, rating int
+	 * @return a message saying that the Player information has been successfully updated or if the name entered isn't from any Player the message says that can't found a Player with that name
+	 */
 	public String updateEmployeesInfo(String name, double salary, String status, int dorsal, int goals, int rating,
 			int attribute) {
 		String msg = "Se ha actualizado la informacion del jugador exitosamente" + "\n";
@@ -332,6 +407,12 @@ public class FootballClub {
 		return msg;
 	}
 
+	/**
+	 * look for the employee inside the offices and dressing rooms <br>
+	 * <b> pre: the employee has to be created in the club  
+	 * @param name= name string 
+	 * @return a array with the employee's location 
+	 */
 	public int[] findInMatriz(String name) {
 		int[] location = new int[3];
 		Employee newEmployee = findEmployee(name);
@@ -367,6 +448,13 @@ public class FootballClub {
 		return location;
 	}
 
+
+	/**
+	 * dissmis an employee <br>
+	 * <b> pre: the person has to be a club employee  
+	 * @param name= name String
+	 * @return a message saying that the employee has been dismiss or no
+	 */
 	public String dismiss(String name) {
 		String message = "";
 		Employee objSearch = findEmployee(name);
@@ -427,6 +515,12 @@ public class FootballClub {
 		return message;
 	}
 
+	/**
+	 * add a player to team A or team B <br>
+	 * <b> pre: team A and team B has to been created  
+	 * @param playerName, teamName= playerName String, teamName String 
+	 * @return a message saying that the player could be added or that the player doesn't exist or that the team is full
+	 */
 	public String playerToTeam(String playerName, String teamName) {
 		String msg = "";
 		boolean added = false;
@@ -469,6 +563,12 @@ public class FootballClub {
 		return msg;
 	}
 
+	/**
+	 * add an AssistantCoach to team A or team B <br>
+	 * <b> pre: team A and team B has to been created  
+	 * @param assistantName, teamName= assistantName String, teamName String 
+	 * @return a message saying that the AssistantCoach could be added or that the AssistantCoach doesn't exist or that the team is full
+	 */
 	public String assistantToTeam(String assistantName, String teamName) {
 		String msg = "";
 		boolean added = false;
@@ -511,6 +611,12 @@ public class FootballClub {
 		return msg;
 	}
 
+	/**
+	 * add a HeadCoach to team A or team B <br>
+	 * <b> pre: team A and team B has to been created  
+	 * @param coachName, teamName= coachName String, teamName String 
+	 * @return a message saying that the HeadCoach could be added or that the HeadCoach doesn't exist or that the team is full
+	 */
 	public String headcoachToTeam(String coachName, String teamName) {
 		String msg = "";
 		HeadCoach coach = (HeadCoach) findEmployee(coachName);
@@ -540,6 +646,13 @@ public class FootballClub {
 		return msg;
 	}
 
+
+	/**
+	 * add a player to the dressing room depending if the player are in team A or team B <br>
+	 * <b> pre: the player has to be in team A or team B  
+	 * @param teamName, playerName= teamName String, playerName String 
+	 * @return a message saying that the player could be added to the dressing room  or that the player doesn't exist or that the dressing room is full
+	 */
 	public String playerToDressingRoom(String teamName, String playerName) {
 		Player newplayer = (Player) findEmployee(playerName);
 		String msg = "";
@@ -611,6 +724,12 @@ public class FootballClub {
 		return msg;
 	}
 
+	/**
+	 * add a HeadCoach and an AssistantCoach to the office  <br>
+	 * <b> pre: has to exist a HeadCoach and AssistantCoach with that name 
+	 * @param coachname= coachName String  
+	 * @return a message saying that the HeadCoach or the AssistantCoach could be added to the office  or that the HeadCoach or AssistantCoach don't exist or that the office is full
+	 */
 	public String coachToOffice(String coachName) {
 		String msg = "";
 		boolean added = false;
@@ -677,18 +796,30 @@ public class FootballClub {
 		return msg;
 	}
 
+	/**
+	 * create a Team (team A or team B) <br> 
+	 * @param teamName, team= teamName String, team String  
+	 * @return a message saying that the Team A or Team B has been created 
+	 */
 	public String createTeam(String teamName, String team) {
 		String msg = "Opcion de equipo invalida" + "\n";
 		if (team.equalsIgnoreCase("A")) {
 			this.teamA = new ProfessionalTeam(teamName);
-			msg += "El equipo " + teamName + " ha sido creado" + "\n";
+			msg = "El equipo " + teamName + " ha sido creado" + "\n";
 		} else if (team.equalsIgnoreCase("B")) {
 			this.teamB = new ProfessionalTeam(teamName);
-			msg += "El equipo " + teamName + " ha sido creado" + "\n";
+			msg = "El equipo " + teamName + " ha sido creado" + "\n";
 		}
 		return msg;
 	}
 
+
+	/**
+	 * update the Team information depending what user wants to update <br>
+	 * <b> pre: Team with that name has to be created 
+	 * @param teamName, newName, date, tactic, formation, choice= teamName String, newName String, date String, tactic String, formation String 
+	 * @return a message saying that the Team information has been successfully updated or if the name entered isn't from any Team the message says that can't found a Team with that name
+	 */
 	public String updateTeamInfo(String teamName, String newName, String date, String tactic, String formation,
 			int choice) {
 		String msg = "El equipo no existe" + "/n";
@@ -721,6 +852,13 @@ public class FootballClub {
 		return msg;
 	}
 
+
+	/**
+	 * the user decides if he wants to see the lineUp in the matrix form of the two teams or of just one <br>
+	 * <b> pre: teams must be created and have at least one lineUp  </b> 
+	 @param teamName, choice= teamName String, choice int 
+	 * @return a message showing the lineUp in the matrix form for team A or team B or both 
+	 */
 	public String showTeamMatriz(String teamName, int choice) {
 		String msg = "Opcion Invalida";
 		if (choice == 1) {
@@ -738,6 +876,11 @@ public class FootballClub {
 		return msg;
 	}
 
+	/**
+	 * shows on screen all the information of all employees <br>
+	 * <b> pre:  the employees has to been created with their information </b> 
+	 * @return a message showing the all the information of all employees 
+	 */
 	public String showEmployeesInfo() {
 		String msg = "";
 		for (int i = 0; i < this.employee.size(); i++) {
@@ -746,12 +889,22 @@ public class FootballClub {
 		return msg;
 	}
 
+	/**
+	 * shows on screen all the information of the both teams <br>
+	 * <b> pre:  the teams has to been created with their information </b> 
+	 * @return a message showing the all the information of all teams
+	 */
 	public String showTeamsInfo() {
 		String msg = this.teamA.showTeamInfo();
 		msg += this.teamB.showTeamInfo();
 		return msg;
 	}
 
+	/**
+	 * displays Club information on screen<br>
+	 * <b> pre: we need all the Club information: name, nit, foundationDate, employee, teams amount, team A, team B </b> 
+	 * @return a message showing all the information of the Club
+	 */
 	public String showClubInfo() {
 		int teamsAmount = 0;
 		String msg = "******************CLUB****************" + "/n" + "Nombre: " + this.name + "/n" + "Nit: "

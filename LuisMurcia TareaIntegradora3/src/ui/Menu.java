@@ -23,6 +23,10 @@ public class Menu {
 	private final static int SHOW_TEAM_LINEUPS = 14;
 	private final static int EXIT = 15;
 
+	/**
+	 * constructor method <br>
+	 * <b> pre: we need a relationship with the FootballClub class </b> 
+	 */
 	public Menu() {
 		System.out.println("Ingrese el nombre del club");
 		String name = sc.nextLine();
@@ -33,6 +37,11 @@ public class Menu {
 		this.club = new FootballClub(name, nit, foundationDate);
 	}
 
+	/** 
+	* Main menu of the application<br>
+	* <b> pre: The user cant choose an option that's not on the menu</b> 
+	* <b> post: The user choose an option</b> 
+	*/
 	public void showMenu() {
 		System.out.println("(1) Crear equipo");
 		System.out.println("(2) Contratar un empleado");
@@ -51,16 +60,25 @@ public class Menu {
 		System.out.println("(15) Salir ");
 	}
 
-	public String readCreateTeam() {
+	/**
+	 * user enter the team they want to create and the team name <br>
+	 * <b> pre: the user has to enter team A or team B    </b> 
+	 * <b> post: Shows a message  con el type of team and the team name 
+	 */
+	public void readCreateTeam() {
 		System.out.println("Ingrese A o B segun cual equipo desee crear");
 		String team = sc.nextLine();
 		System.out.println("Ingrese el nombre del equipo");
 		String teamName = sc.nextLine();
 		String msg = this.club.createTeam(teamName, team);
-		return msg;
+		System.out.println(msg);
 	}
 
-	public String readAddEmployee() {
+	/**
+	 * user enters all the information of the employee that he chooses <br>
+	 * <b> post: Shows a message with all the information of the employee that the user chooses
+	 */
+	public void readAddEmployee() {
 		String msg;
 		System.out.println("Ingrese el tipo de empleado que desea agregar");
 		System.out.println("(1) Entrenador (2) Jugador (3) Asistente");
@@ -107,18 +125,28 @@ public class Menu {
 		} else {
 			msg = "Opcion invalida";
 		}
-		return msg;
+		System.out.println(msg);
 
 	}
 
-	public String readDismissEmployee() {
+	/**
+	 * user enter the employee's name that he wants to dismiss <br>
+	 * <b> pre: the user has to been created   </b> 
+	 * <b> post: Shows a message with the employee's name that the user wants to dismiss
+	 */
+	public void readDismissEmployee() {
 		System.out.println("Ingrese el nombre del empleado que desea despedir");
 		String name = sc.nextLine();
 		String msg = this.club.dismiss(name);
-		return msg;
+		System.out.println(msg);
 	}
 
-	public String readEmployeeToTeam() {
+	/**
+	 * user enter the type of employee that wants to add a Team A or Team B and the employee's name <br>
+	 * <b> pre: the teams has to been created    </b> 
+	 * <b> post: Shows a message with the name of the employee and the type of employee that was added to team A or team B 
+	 */
+	public void readEmployeeToTeam() {
 		String msg = "";
 		System.out.println("Ingrese el tipo de empleado que desea agregar al equipo");
 		System.out.println("1 Entrenador 2 Jugador 3 Asistente");
@@ -144,10 +172,15 @@ public class Menu {
 				break;
 			default:
 		}
-		return msg;
+		System.out.println(msg);
 	}
 
-	public String readUpdateTeam() {
+	/**
+	 * user chooses what information updates team A or team B  <br>
+	 * <b> pre: team A and team B has to been created    </b> 
+	 * <b> post: Shows a message with the updates in team A or team B  
+	 */
+	public void readUpdateTeam() {
 		String msg = "";
 		String newName = "xyz";
 		String date = "01/01/1900";
@@ -177,28 +210,38 @@ public class Menu {
 		} else {
 			msg = this.club.updateTeamInfo(teamName, newName, date, tactic, formation, choice);
 		}
-		return msg;
+		System.out.println(msg);
 	}
 
-	public String readUpdateEmployeeInfo() {
-		String msg;
+	/**
+	 * user chooses what information updates in some type of employees  <br>
+	 * <b> pre: employees has to been created     </b> 
+	 * <b> post: Shows a message with the updates in some type of employees
+	 */
+	public void readUpdateEmployeeInfo() {
+		String msg="";
 		System.out.println("Ingrese el tipo de empleado al que desea actualizar la informacion");
 		System.out.println("(1) Entrenador (2) Jugador (3) Asistente");
 		int choice = sc.nextInt();
 		sc.nextLine();
 		if (choice == 1) {
-			msg = readUpdateCoachInfo();
+			readUpdateCoachInfo();
 		} else if (choice == 2) {
-			msg = readUpdatePlayerInfo();
+			readUpdatePlayerInfo();
 		} else if (choice == 3) {
-			msg = readUpdateAssistantInfo();
+			readUpdateAssistantInfo();
 		} else {
 			msg = "Opcion invalida";
 		}
-		return msg;
+		System.out.println(msg);
 	}
 
-	private String readUpdatePlayerInfo() {
+	/**
+	 * user update the player information and choose what update  <br>
+	 * <b> pre: player has to been created  </b> 
+	 * <b> post: Shows a message with the updates of the player 
+	 */
+	private void readUpdatePlayerInfo() {
 		String msg = "";
 		int dorsal = 0;
 		System.out.println("Ingrese nombre del jugador");
@@ -241,10 +284,16 @@ public class Menu {
 				msg = this.club.updateEmployeesInfo(name, salary, status, dorsal, goals, rating, attribute);
 				break;
 		}
-		return msg;
+		System.out.println(msg);
 	}
-
-	private String readUpdateCoachInfo() {
+	
+	
+	/**
+	 * user update the HeadCoach information and choose what update  <br>
+	 * <b> pre: HeadCoach has to been created  </b> 
+	 * <b> post: Shows a message with the updates of the HeadCoach
+	 */
+	private void readUpdateCoachInfo() {
 		String msg = "";
 		int yearsExperience = 0;
 		double salary = 0.0;
@@ -281,10 +330,15 @@ public class Menu {
 				msg = this.club.updateEmployeesInfo(yearsExperience, name, salary, championships, status, attribute);
 				break;
 		}
-		return msg;
+		System.out.println(msg);
 	}
 
-	private String readUpdateAssistantInfo() {
+	/**
+	 * user update the AssitantCoach information and choose what update  <br>
+	 * <b> pre: AssistantCoach has to been created  </b> 
+	 * <b> post: Shows a message with the updates of the AssistantCoach
+	 */
+	private void readUpdateAssistantInfo() {
 		String msg = "";
 		int yearsExperience = 0;
 		double salary = 0.0;
@@ -314,37 +368,57 @@ public class Menu {
 				msg = this.club.updateEmployeesInfo(yearsExperience, attribute, name, salary, status);
 				break;
 		}
-		return msg;
+		System.out.println(msg);
 	}
 
-	public String readCoachToOffice() {
+	/**
+	 * user sends a coach to an office  <br>
+	 * <b> pre: HeadCoach has to been created  </b> 
+	 * <b> post: Shows a message with the location(office) of the HeadCoach
+	 */
+	public void readCoachToOffice() {
 		System.out.println("Ingrese el nombre del entrenador");
 		String coachName = sc.nextLine();
 		String msg = this.club.coachToOffice(coachName);
-		return msg;
+		System.out.println(msg);
 	}
 
-	public String readPlayerToDressingRoom() {
+	/**
+	 * user sends a player to a dressing room depending if the player is in team A or team B  <br>
+	 * <b> pre: Player has to been created  </b> 
+	 * <b> post: Shows a message with the location(dressing room) of the Player
+	 */
+	public void readPlayerToDressingRoom() {
 		System.out.println("Ingrese el nombre del jugador");
 		String playerName = sc.nextLine();
 		System.out.println("Ingrese el nombre del equipo al que pertenece el jugador");
 		String teamName = sc.nextLine();
 		String msg = this.club.playerToDressingRoom(teamName, playerName);
-		return msg;
+		System.out.println(msg);
 	}
 
-	public String readEmployeeLocation() {
+	/**
+	 * the user enters the name of the employee who wants to find in the offices or in the dressing rooms  <br>
+	 * <b> pre: employees, offices and dressing rooms has to been created  </b> 
+	 * <b> post: Shows a message with the employee in the office or in the dressing rooms
+	 */
+	public void readEmployeeLocation() {
 		System.out.println("Ingrese el nombre del empleado a buscar");
 		String name = sc.nextLine();
 		String msg = this.club.employeeLocation(name);
-		return msg;
+		System.out.println(msg);
 	}
 
-	public String readShowTeamMatriz() {
+	/**
+	 *  the user enters if he wants to see the lineUp of a team or of both teams<br>
+	 * <b> pre: the LineUp of the Team A and Team B has to be already created  </b> 
+	 * <b> post: Shows a message  with the team A or team B LineUps
+	 */
+	public void readShowTeamMatriz() {
 		String msg = "";
 		String teamName = "";
-		System.out.println("Dese a ver las alineaciones de ");
-		System.out.println("(1) Todos los equipos (2) Un unico equipo");
+		System.out.println("Desea a ver las alineaciones de ");
+		System.out.println("(1) Un unico equipo (2) Todos los equipos");
 		int choice = sc.nextInt();
 		sc.nextLine();
 		if (choice == 1) {
@@ -357,9 +431,14 @@ public class Menu {
 		} else {
 			msg = "Opcion invalida";
 		}
-		return msg;
+		System.out.println(msg);
 	}
 
+	/** 
+	*  Run the whole application<br>
+	* <b> pre: The option has to be an integer</b> 
+	* <b> post: Run the program</b> 
+	*/
 	public void startProgram() {
 		int option;
 		do {
@@ -369,12 +448,22 @@ public class Menu {
 		} while (option != EXIT);
 	}
 
+	/** 
+	*  Read and save an option that the user chose<br>
+	* <b> pre: The option has to be representated by an integer</b> 
+	* <b> post: Return the integer choice</b> 
+	*/
 	public int readOption() {
 		int choice = sc.nextInt();
 		sc.nextLine();
 		return choice;
 	}
 
+	/** 
+	*  Call the method that run the option chose by the user<br>
+	* <b> pre: The choice has to be an integer</b> 
+	* <b> post: </b> 
+	*/
 	public void doOperation(int choice) {
 		switch (choice) {
 			case CREATE_TEAM:

@@ -6,6 +6,11 @@ public class Lineup {
 	private Tactic tactic;
 	private int[][] formationTeam;
 
+	/**
+	 * constructor method <br>
+	 * <b> pre: we need the atributes </b> 
+	 * @param  date, tactic= date String, tactic String 
+	 */
 	public Lineup(String date, String tactic) {
 		this.date = date;
 		if (tactic.equalsIgnoreCase("Posesion")) {
@@ -20,17 +25,39 @@ public class Lineup {
 		this.formationTeam = new int[FORMATION_ROWS][FORMATION_COLUMNS];
 	}
 
+	/**
+	* get method <br>
+	* <b> pre: constructor method </b> 
+	* @return date= LineUp date 
+	*/
 	public String getDate() {
 		return this.date;
 	}
 
+	/**
+	 * set constructor <br>
+	 * <b> pre: constructor method </b> 
+	 * @param date= LineUp date 
+	 */
 	public void setDate(String date) {
 		this.date = date;
 	}
 
+	/**
+	* get method <br>
+	* <b> pre: constructor method </b> 
+	* @return formationTeam= LineUp formationTeam
+	*/
 	public int[][] getFormationTeam() {
 		return this.formationTeam;
 	}
+
+	/**
+	 * takes a matrix that the user enters by console and saves these values and fills the matrix simulating a playing field<br>
+	 * <b> pre: the formation must be written with: (-) and the minimum of lines must be 3 and the maximum 6 </b> 
+	 * @param formation= Team formation 
+	 * @return a message that shows a binary matrix that simulating a playing field
+	 */
 
 	public String convertToMatriz(String formation) {
 		String msg = "";
@@ -137,6 +164,12 @@ public class Lineup {
 		return msg;
 	}
 
+
+	/**
+	 * convert the binary simulation of the playing field to text format formation <br>
+	 * <b> pre: we need the matrix in binary form to have been created </b> 
+	 * @return the team formation in a text format
+	 */
 	public String matrizToString() {
 		String Lup = " ";
 		int amount = 0;
@@ -156,6 +189,12 @@ public class Lineup {
 		return Lup;
 	}
 
+
+	/**
+	 * shows the matrix that simulates the playing field<br>
+	 * <b> pre: the simulation matrix has to be created </b> 
+	 * @return the matrix that simulates the playing field 
+	 */
 	public String showMatriz() {
 		String Lup = "";
 		for (int i = 0; i < FORMATION_ROWS; i++) {
@@ -170,6 +209,12 @@ public class Lineup {
 		return Lup;
 	}
 
+	
+	/**
+	 * displays LineUp information on screen<br>
+	 * <b> pre: we need all the LineUp information: date, tactic, formation </b> 
+	 * @return a message showing all the information of the LineUp
+	 */
 	public String showLineUpInfo() {
 		String info = "**********" + "\n";
 		info += "Fecha de alineacion: " + date + "\n";

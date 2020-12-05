@@ -10,6 +10,11 @@ public class Player extends Employee implements PriceAndLevel {
 	private double level;
 	private double price;
 
+	/**
+	 * constructor method <br>
+	 * <b> pre: we need the atributes </b> 
+	 * @param  name, id, salary, dorsal, position= name String, id String, salary double, dorsal int, position String  
+	 */
 	public Player(String name, String id, double salary, int dorsal, String position) {
 		super(name, id, salary);
 		this.dorsal = dorsal;
@@ -26,19 +31,39 @@ public class Player extends Employee implements PriceAndLevel {
 		}
 	}
 
+	/**
+	 * set constructor <br>
+	 * <b> pre: constructor method </b> 
+	 * @param rating= Player raiting 
+	 */
 	public void setRating(int rating) {
 		this.cantRatings++;
 		this.rating = (this.rating + rating) / cantRatings;
 	}
 
+	/**
+	 * set constructor <br>
+	 * <b> pre: constructor method </b> 
+	 * @param goals= Player goals 
+	 */
 	public void setGoals(int goals) {
 		this.goals += goals;
 	}
 
+	/**
+	 * set constructor <br>
+	 * <b> pre: constructor method </b> 
+	 * @param dorsal= Player dorsal
+	 */
 	public void setDorsal(int dorsal) {
 		this.dorsal = dorsal;
 	}
 
+	/**
+	 * calculates the market price of the player <br>
+	 * <b> pre: we need to know the Player type </b> 
+	 * @return the market price of the player
+	 */
 	public double calculateMarket() {
 		switch (position) {
 			case GOALKEEPER:
@@ -58,6 +83,12 @@ public class Player extends Employee implements PriceAndLevel {
 		return price;
 	}
 
+
+	/**
+	 * calculates the level of the player <br>
+	 * <b> pre: we need to know the Player type </b> 
+	 * @return the level of the player
+	 */
 	public double calculateLevel() {
 		switch (position) {
 			case GOALKEEPER:
@@ -78,12 +109,22 @@ public class Player extends Employee implements PriceAndLevel {
 
 	}
 
+	/**
+	 * displays basic player information on screen<br>
+	 * <b> pre: we need the basic player information: name, dorsal, position </b> 
+	 * @return a message showing all the basic player information
+	 */
 	public String showHalfInfo() {
 		String msg = "********JUGADOR************" + "\n" + "Nombre: " + super.getName() + "\n" + "Camiseta: "
 				+ this.dorsal + "\n" + "Posicion: " + this.position.name() + "\n";
 		return msg;
 	}
 
+	/**
+	 * displays all the player information on screen<br>
+	 * <b> pre: we need all the player information: name, id, salary, status, dorsal, goals, position, level and marketPrice </b> 
+	 * @return a message showing all the player information
+	 */
 	@Override
 	public String showInfo() {
 		String msg = "********JUGADOR************" + "\n" + "Nombre: " + super.getName() + "\n" + "ID: " + super.getId()
